@@ -53,5 +53,9 @@ set to your default language ("en"), as it's the most common case when you need 
 there are some typos in POEditor translations or special symbols need to be used in remote strings.xml, 
 that need to be applied to remote versions of your strings.
 
-Finally, this plugin is ready to use! Enjoy!
+Finally, this plugin is ready to use!
+
+In order to trigger the tasks consider selecting `downloadTranslations` and `uploadTranslations` tasks in
+`translations` group Gradle tasks folder associated to the module where you apply this plugin.
+
 Improvement ideas and pull requests are highly appreciated.
