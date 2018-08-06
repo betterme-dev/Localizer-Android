@@ -1,0 +1,82 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.2.60'
+    id 'java-gradle-plugin'
+    id "com.gradle.plugin-publish" version '0.10.0'
+}
+
+group 'com.betterme.localizer'
+version '0.0.1'
+
+repositories {
+    jcenter()
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+
+ext {
+    kotlinVer = '1.2.60'
+    gsonVer = '2.8.2'
+    okHttpVer = '3.11.0'
+    jUnitVer = '4.12'
+    assertJVer = '3.8.0'
+    mockitoVer = '2.12.0'
+    mockitoKotlinVer = '1.5.0'
+}
+
+dependencies {
+    compileOnly gradleApi()
+
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVer"
+
+    // JSON Parsing
+    implementation "com.google.code.gson:gson:$gsonVer"
+
+    // OkHttp
+    implementation "com.squareup.okhttp3:okhttp:$okHttpVer"
+
+    // Unit-tests
+    testImplementation "junit:junit:$jUnitVer"
+    testImplementation "org.mockito:mockito-core:$mockitoVer"
+    testImplementation "org.mockito:mockito-inline:$mockitoVer"
+    testImplementation("com.nhaarman:mockito-kotlin-kt1.1:$mockitoKotlinVer") {
+        exclude group: 'org.jetbrains.kotlin'
+        exclude group: 'org.mockito'
+    }
+}
+
+gradlePlugin {
+    plugins {
+        localizer {
+            id = 'com.betterme.localizer'
+            implementationClass = 'com.betterme.localizer.LocalizerPlugin'
+        }
+    }
+}
+
+pluginBundle {
+    description = 'Gradle plugin which simplifies Android string resources & translations synchronization with POEditor.'
+    website = 'https://github.com/betterme-dev/Localizer-Android'
+    vcsUrl = 'https://github.com/betterme-dev/Localizer-Android'
+    tags = ['translations', 'strings', 'android', 'resources', 'localization', 'values', 'poeditor']
+
+    plugins {
+        localizer {
+            displayName = 'localizer'
+            version = '0.0.1'
+        }
+    }
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.6"
+    }
+}
+
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.6"
+    }
+}
