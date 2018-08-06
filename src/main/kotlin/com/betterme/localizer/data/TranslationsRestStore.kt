@@ -1,9 +1,9 @@
-package com.genesis.localizer.data
+package com.betterme.localizer.data
 
-import com.genesis.localizer.data.models.ApiParams
-import com.genesis.localizer.data.models.AvailableLanguagesResponse
-import com.genesis.localizer.data.models.TranslationsDownloadResponse
-import com.genesis.localizer.data.models.TranslationsUploadResponse
+import com.betterme.localizer.data.models.ApiParams
+import com.betterme.localizer.data.models.AvailableLanguagesResponse
+import com.betterme.localizer.data.models.TranslationsDownloadResponse
+import com.betterme.localizer.data.models.TranslationsUploadResponse
 import com.google.gson.Gson
 import okhttp3.*
 import java.io.File

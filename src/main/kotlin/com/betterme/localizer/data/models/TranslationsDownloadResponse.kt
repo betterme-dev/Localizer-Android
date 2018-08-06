@@ -1,6 +1,6 @@
-package com.genesis.localizer.data.models
+package com.betterme.localizer.data.models
 
-import com.genesis.localizer.data.MetaDataContants
+import com.betterme.localizer.data.MetaDataContants
 import com.google.gson.annotations.SerializedName
 
 internal data class TranslationsDownloadResponse(

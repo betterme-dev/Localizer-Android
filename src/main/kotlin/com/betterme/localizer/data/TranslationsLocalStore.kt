@@ -1,7 +1,6 @@
-package com.genesis.localizer.data
+package com.betterme.localizer.data
 
 import java.io.File
-import java.util.regex.Pattern
 
 internal interface TranslationsLocalStore {
 

@@ -1,4 +1,4 @@
-package com.genesis.localizer.data
+package com.betterme.localizer.data
 
 internal object MetaDataContants {
 

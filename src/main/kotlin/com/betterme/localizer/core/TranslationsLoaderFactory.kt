@@ -1,10 +1,10 @@
-package com.genesis.localizer.core
+package com.betterme.localizer.core
 
-import com.genesis.localizer.data.TranslationsLocalStore
-import com.genesis.localizer.data.TranslationsLocalStoreImpl
-import com.genesis.localizer.data.TranslationsRestStore
-import com.genesis.localizer.data.TranslationsRestStoreImpl
-import com.genesis.localizer.data.models.ApiParams
+import com.betterme.localizer.data.TranslationsLocalStore
+import com.betterme.localizer.data.TranslationsLocalStoreImpl
+import com.betterme.localizer.data.TranslationsRestStore
+import com.betterme.localizer.data.TranslationsRestStoreImpl
+import com.betterme.localizer.data.models.ApiParams
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
 

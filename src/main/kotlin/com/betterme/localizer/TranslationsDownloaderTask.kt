@@ -1,7 +1,7 @@
-package com.genesis.localizer
+package com.betterme.localizer
 
-import com.genesis.localizer.core.TranslationsLoaderFactory
-import com.genesis.localizer.data.models.ApiParams
+import com.betterme.localizer.core.TranslationsLoaderFactory
+import com.betterme.localizer.data.models.ApiParams
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
