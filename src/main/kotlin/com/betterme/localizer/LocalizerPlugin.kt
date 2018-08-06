@@ -13,7 +13,7 @@ open class LocalizerPlugin : Plugin<Project> {
             it.projectId.set(extension.projectId)
             it.resourcesPath.set(extension.resourcesPath).toString()
             it.exportLocale.set(extension.exportLocale)
-            it.overwriteOnExport.set(extension.overwriteOnExport.toString())
+            it.overwriteOnExport.set(extension.overwriteOnExport)
         }
     }
 }
