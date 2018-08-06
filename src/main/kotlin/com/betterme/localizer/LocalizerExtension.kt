@@ -3,7 +3,7 @@ package com.betterme.localizer
 import org.gradle.api.Project
 import org.gradle.api.provider.Property
 
-class LocalizerExtension {
+open class LocalizerExtension {
 
     val apiToken: Property<String>
     val projectId: Property<String>
