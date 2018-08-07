@@ -13,6 +13,7 @@ open class TranslationsUploaderTask : DefaultTask() {
     @Input val resourcesPath = project.objects.property(String::class.java)
     @Input val exportLocale = project.objects.property(String::class.java)
     @Input val overwriteOnExport = project.objects.property(String::class.java)
+    @Input val syncTerms = project.objects.property(String::class.java)
 
     init {
         description = "Uploads terms and translations in a current project for a given exportLocale"
@@ -26,6 +27,6 @@ open class TranslationsUploaderTask : DefaultTask() {
         val translationsLoader = TranslationsLoaderFactory.create(apiParams)
         translationsLoader.uploadTermsAndTranslations(resourcesPath.get(), exportLocale.get(),
                 /* Small temp hack to avoid Groovy and Kotlin boolean incompatibility issue */
-                overwriteOnExport.get().toBoolean())
+                overwriteOnExport.get().toBoolean(), syncTerms.get().toBoolean())
     }
 }

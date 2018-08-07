@@ -20,7 +20,7 @@ interface TranslationsLoader {
      * @param locale desired exportLocale.
      * @param overwrite true if strings with the existing keys need to be overwritten.
      */
-    fun uploadTermsAndTranslations(resFolderPath: String, locale: String, overwrite: Boolean)
+    fun uploadTermsAndTranslations(resFolderPath: String, locale: String, overwrite: Boolean, syncTerms: Boolean)
 }
 
 internal class TranslationsLoaderImpl(
@@ -41,8 +41,8 @@ internal class TranslationsLoaderImpl(
         }
     }
 
-    override fun uploadTermsAndTranslations(resFolderPath: String, locale: String, overwrite: Boolean) {
+    override fun uploadTermsAndTranslations(resFolderPath: String, locale: String, overwrite: Boolean, syncTerms: Boolean) {
         val stringsFilePath = localStore.getStringsFilePath(resFolderPath)
-        restStore.uploadStringsFile(apiParams, stringsFilePath, locale, overwrite)
+        restStore.uploadStringsFile(apiParams, stringsFilePath, locale, overwrite, syncTerms)
     }
 }

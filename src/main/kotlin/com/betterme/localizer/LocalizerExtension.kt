@@ -10,6 +10,7 @@ open class LocalizerExtension {
     val resourcesPath: Property<String>
     val exportLocale: Property<String>
     val overwriteOnExport: Property<String>
+    val syncTerms: Property<String>
 
     constructor(project: Project) {
         apiToken = project.objects.property(String::class.java)
@@ -17,5 +18,6 @@ open class LocalizerExtension {
         resourcesPath = project.objects.property(String::class.java)
         exportLocale = project.objects.property(String::class.java)
         overwriteOnExport = project.objects.property(String::class.java)
+        syncTerms = project.objects.property(String::class.java)
     }
 }

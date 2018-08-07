@@ -19,7 +19,7 @@ internal interface TranslationsRestStore {
 
     fun getAvailableLanguages(apiParams: ApiParams): List<String>
 
-    fun uploadStringsFile(apiParams: ApiParams, filePath: String, locale: String, overWrite: Boolean)
+    fun uploadStringsFile(apiParams: ApiParams, filePath: String, locale: String, overWrite: Boolean, syncTerms: Boolean)
 }
 
 internal class TranslationsRestStoreImpl(
@@ -76,9 +76,9 @@ internal class TranslationsRestStoreImpl(
         return languageResponse.result.languages.map { it.code }
     }
 
-    override fun uploadStringsFile(apiParams: ApiParams, filePath: String, locale: String, overWrite: Boolean) {
+    override fun uploadStringsFile(apiParams: ApiParams, filePath: String, locale: String, overWrite: Boolean, syncTerms: Boolean) {
         val fileUploadingRequest = createTranslationsUploadRequest(apiParams.apiToken,
-                apiParams.projectId, filePath, overWrite, locale)
+                apiParams.projectId, filePath, overWrite, syncTerms, locale)
 
         val fileResponse = okHttpClient.newCall(fileUploadingRequest).execute()
         if (!fileResponse.isSuccessful) throw IOException()
@@ -104,10 +104,11 @@ internal class TranslationsRestStoreImpl(
 
     private fun createTranslationsUploadRequest(
             apiToken: String, projectId: String, filePath: String, overWrite: Boolean,
-            locale: String = "en"
+            syncTerms: Boolean, locale: String = "en"
     ): Request {
 
         val overwriteCode = if (overWrite) "1" else "0"
+        val syncTermsCode = if (syncTerms) "1" else "0"
 
         val fileRequestBody = MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
@@ -120,6 +121,7 @@ internal class TranslationsRestStoreImpl(
                 .addFormDataPart(MetaDataContants.Params.PARAM_UPDATING,
                         MetaDataContants.Values.VALUE_UPDATING_TERMS_AND_TRANSLATIONS)
                 .addFormDataPart(MetaDataContants.Params.PARAM_OVERWRITE, overwriteCode)
+                .addFormDataPart(MetaDataContants.Params.PARAM_SYNC_TERMS, syncTermsCode)
                 .build()
 
         return Request.Builder()

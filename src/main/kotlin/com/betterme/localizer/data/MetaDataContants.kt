@@ -14,7 +14,8 @@ internal object MetaDataContants {
         const val PARAM_PROJECT_ID = "id"
         const val PARAM_UPDATING = "updating"
         const val PARAM_FILE = "file"
-        const val PARAM_OVERWRITE = "overwriteOnExport"
+        const val PARAM_OVERWRITE = "overwrite"
+        const val PARAM_SYNC_TERMS = "sync_terms"
 
         object Result {
             const val PARAM_RESULT = "result"

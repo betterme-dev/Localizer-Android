@@ -14,6 +14,7 @@ open class LocalizerPlugin : Plugin<Project> {
             it.resourcesPath.set(extension.resourcesPath).toString()
             it.exportLocale.set(extension.exportLocale)
             it.overwriteOnExport.set(extension.overwriteOnExport)
+            it.syncTerms.set(extension.syncTerms)
         }
 
         project.tasks.create("downloadTranslations", TranslationsDownloaderTask::class.java) {
