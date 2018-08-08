@@ -1,4 +1,4 @@
-package com.betterme.localizer.data
+package com.betterme.localizer.data.constants
 
 internal object MetaDataContants {
 
@@ -11,6 +11,7 @@ internal object MetaDataContants {
         const val PARAM_API_TOKEN = "api_token"
         const val PARAM_TYPE = "type"
         const val PARAM_LANGUAGE = "language"
+        const val PARAM_FILTERS = "filters"
         const val PARAM_PROJECT_ID = "id"
         const val PARAM_UPDATING = "updating"
         const val PARAM_FILE = "file"

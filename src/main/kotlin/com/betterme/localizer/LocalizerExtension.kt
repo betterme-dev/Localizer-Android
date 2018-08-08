@@ -1,6 +1,7 @@
 package com.betterme.localizer
 
 import org.gradle.api.Project
+import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
 
 open class LocalizerExtension {
@@ -11,6 +12,7 @@ open class LocalizerExtension {
     val exportLocale: Property<String>
     val overwriteOnExport: Property<String>
     val syncTerms: Property<String>
+    val filters: ListProperty<String>
 
     constructor(project: Project) {
         apiToken = project.objects.property(String::class.java)
@@ -19,5 +21,6 @@ open class LocalizerExtension {
         exportLocale = project.objects.property(String::class.java)
         overwriteOnExport = project.objects.property(String::class.java)
         syncTerms = project.objects.property(String::class.java)
+        filters = project.objects.listProperty(String::class.java)
     }
 }

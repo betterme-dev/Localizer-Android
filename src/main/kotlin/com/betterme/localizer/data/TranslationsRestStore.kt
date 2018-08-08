@@ -1,5 +1,6 @@
 package com.betterme.localizer.data
 
+import com.betterme.localizer.data.constants.MetaDataContants
 import com.betterme.localizer.data.models.ApiParams
 import com.betterme.localizer.data.models.AvailableLanguagesResponse
 import com.betterme.localizer.data.models.TranslationsDownloadResponse
@@ -11,9 +12,9 @@ import java.io.IOException
 
 internal interface TranslationsRestStore {
 
-    fun loadTranslationsUrls(locales: List<String>, apiParams: ApiParams): Map<String, String>
+    fun loadTranslationsUrls(locales: List<String>, filters: List<String>, apiParams: ApiParams): Map<String, String>
 
-    fun loadTranslationsUrl(locale: String, apiParams: ApiParams): String
+    fun loadTranslationsUrl(locale: String, filters: List<String>, apiParams: ApiParams): String
 
     fun loadTranslationsContent(translationsUrl: String): String
 
@@ -27,17 +28,17 @@ internal class TranslationsRestStoreImpl(
         private val gson: Gson
 ) : TranslationsRestStore {
 
-    override fun loadTranslationsUrls(locales: List<String>, apiParams: ApiParams): Map<String, String> {
+    override fun loadTranslationsUrls(locales: List<String>, filters: List<String>, apiParams: ApiParams): Map<String, String> {
         val urls = mutableMapOf<String, String>()
         locales.forEach { locale ->
-            val url = loadTranslationsUrl(locale, apiParams)
+            val url = loadTranslationsUrl(locale, filters, apiParams)
             urls[locale] = url
         }
         return urls
     }
 
-    override fun loadTranslationsUrl(locale: String, apiParams: ApiParams): String {
-        val postRequest = createTranslationsExportRequest(locale, apiParams.apiToken, apiParams.projectId)
+    override fun loadTranslationsUrl(locale: String, filters: List<String>, apiParams: ApiParams): String {
+        val postRequest = createTranslationsExportRequest(locale, apiParams.apiToken, apiParams.projectId, filters)
 
         val postResponse = okHttpClient.newCall(postRequest).execute()
         if (!postResponse.isSuccessful) {
@@ -89,13 +90,20 @@ internal class TranslationsRestStoreImpl(
         return
     }
 
-    private fun createTranslationsExportRequest(locale: String, apiToken: String, projectId: String): Request {
-        val requestBody = FormBody.Builder()
+    private fun createTranslationsExportRequest(locale: String, apiToken: String, projectId: String, filters: List<String>): Request {
+        val requestBodyBuilder = FormBody.Builder()
                 .add(MetaDataContants.Params.PARAM_API_TOKEN, apiToken)
                 .add(MetaDataContants.Params.PARAM_PROJECT_ID, projectId)
                 .add(MetaDataContants.Params.PARAM_LANGUAGE, locale)
                 .add(MetaDataContants.Params.PARAM_TYPE, MetaDataContants.Values.VALUE_TYPE_ANDROID_STRINGS)
-                .build()
+
+        if (filters.isNotEmpty()) {
+            filters.forEachIndexed { index, filter ->
+                requestBodyBuilder.add("${MetaDataContants.Params.PARAM_FILTERS}[$index]", filter)
+            }
+        }
+
+        val requestBody = requestBodyBuilder.build()
         return Request.Builder()
                 .url(MetaDataContants.API_ENDPOINT.plus(MetaDataContants.API_REQUEST_EXPORT))
                 .post(requestBody)

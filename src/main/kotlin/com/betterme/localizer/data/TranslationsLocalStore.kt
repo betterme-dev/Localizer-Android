@@ -1,5 +1,6 @@
 package com.betterme.localizer.data
 
+import com.betterme.localizer.data.constants.MetaDataContants
 import java.io.File
 
 internal interface TranslationsLocalStore {
