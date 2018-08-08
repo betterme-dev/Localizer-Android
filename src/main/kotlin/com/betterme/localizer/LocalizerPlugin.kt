@@ -21,6 +21,7 @@ open class LocalizerPlugin : Plugin<Project> {
             it.apiToken.set(extension.apiToken)
             it.projectId.set(extension.projectId)
             it.resourcesPath.set(extension.resourcesPath)
+            it.filters.addAll(extension.filters)
         }
     }
 }
