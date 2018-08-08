@@ -14,7 +14,7 @@ buildscript {
         maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        final localizerVer = '0.0.9'
+        final localizerVer = '0.0.11'
 
         classpath "gradle.plugin.com.betterme.localizer:localizer-android:$localizerVer"
     }
@@ -37,6 +37,7 @@ localizer {
     resourcesPath = "${rootDir}/app/src/main/res".toString()
 
     overwriteOnExport = "true"
+    syncTerms = "true"
     exportLocale = "en"
 }
 ```
@@ -57,6 +58,8 @@ set to your default language ("en"), as it's the most common case when you need 
 (as primary ones) terms up-to-date in POEditor as well. But other languages may also be the case if 
 there are some typos in POEditor translations or special symbols need to be used in remote strings.xml, 
 that need to be applied to remote versions of your strings.
+
+`syncTerms`: allows or denies (if set to false) two-sided strings synchronization with POEditor API, and automatically removes strings remotely deleted locally.
 
 Finally, this plugin is ready to use!
 
