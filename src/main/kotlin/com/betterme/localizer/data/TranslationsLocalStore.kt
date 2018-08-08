@@ -6,7 +6,7 @@ internal interface TranslationsLocalStore {
 
     fun saveToFile(resFolderPath: String, fileContents: String, locale: String)
 
-    fun getStringsFilePath(resFolderPath: String, locale: String = ""): String
+    fun getStringsFilePath(resFolderPath: String, locale: String): String
 }
 
 internal class TranslationsLocalStoreImpl : TranslationsLocalStore {

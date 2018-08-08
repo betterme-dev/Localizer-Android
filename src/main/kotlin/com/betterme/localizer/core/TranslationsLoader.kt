@@ -42,7 +42,7 @@ internal class TranslationsLoaderImpl(
     }
 
     override fun uploadTermsAndTranslations(resFolderPath: String, locale: String, overwrite: Boolean, syncTerms: Boolean) {
-        val stringsFilePath = localStore.getStringsFilePath(resFolderPath)
+        val stringsFilePath = localStore.getStringsFilePath(resFolderPath, locale)
         restStore.uploadStringsFile(apiParams, stringsFilePath, locale, overwrite, syncTerms)
     }
 }
