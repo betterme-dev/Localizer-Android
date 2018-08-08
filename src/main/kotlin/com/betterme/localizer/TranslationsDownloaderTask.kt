@@ -24,8 +24,7 @@ open class TranslationsDownloaderTask : DefaultTask() {
     fun downloadTranslations() {
         val apiParams = ApiParams(apiToken = apiToken.get(), projectId = projectId.get())
         val translationsLoader = TranslationsLoaderFactory.create(apiParams)
-        val defaultFilter = listOf(Filters.FILTER_TRANSLATED)
         translationsLoader.downloadLocalizedStrings(resourcesPath.get(),
-                filters.getOrElse(defaultFilter))
+                filters.getOrElse(emptyList()))
     }
 }

@@ -11,7 +11,7 @@ interface TranslationsLoader {
      *
      * @param resFolderPath path to project's resources folder.
      */
-    fun downloadLocalizedStrings(resFolderPath: String, filters: List<String> = emptyList())
+    fun downloadLocalizedStrings(resFolderPath: String, filters: List<String>)
 
     /**
      * Uploads original strings.xml file to POEditor for a given exportLocale.
@@ -34,7 +34,7 @@ internal class TranslationsLoaderImpl(
         println("Retrieved list of locales available for this project: $availableLocales")
         val urls = restStore.loadTranslationsUrls(availableLocales, filters, apiParams)
         urls.forEach { locale, url ->
-            println("Starting translations for exportLocale $locale download")
+            println("Starting translations for exportLocale $locale download with filters applied: $filters")
             val fileContent = restStore.loadTranslationsContent(url)
             println("Saving translations for exportLocale $locale")
             localStore.saveToFile(resFolderPath, fileContent, locale)

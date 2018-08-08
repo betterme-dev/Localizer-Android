@@ -98,12 +98,12 @@ internal class TranslationsRestStoreImpl(
                 .add(MetaDataContants.Params.PARAM_TYPE, MetaDataContants.Values.VALUE_TYPE_ANDROID_STRINGS)
 
         if (filters.isNotEmpty()) {
-            filters.forEachIndexed { index, filter ->
-                requestBodyBuilder.add("${MetaDataContants.Params.PARAM_FILTERS}[$index]", filter)
-            }
+            val formattedFilters = getFormattedFilters(filters)
+            requestBodyBuilder.add(MetaDataContants.Params.PARAM_FILTERS, formattedFilters)
         }
 
         val requestBody = requestBodyBuilder.build()
+
         return Request.Builder()
                 .url(MetaDataContants.API_ENDPOINT.plus(MetaDataContants.API_REQUEST_EXPORT))
                 .post(requestBody)
@@ -136,6 +136,10 @@ internal class TranslationsRestStoreImpl(
                 .url(MetaDataContants.API_ENDPOINT.plus(MetaDataContants.API_REQUEST_UPLOAD))
                 .post(fileRequestBody)
                 .build()
+    }
+
+    private fun getFormattedFilters(filters: List<String>): String {
+        return filters.joinToString(prefix = "[", postfix = "]", separator = ", ") { "\"$it\"" }
     }
 
 }
