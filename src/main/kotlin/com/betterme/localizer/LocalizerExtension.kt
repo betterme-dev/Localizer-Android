@@ -4,23 +4,14 @@ import org.gradle.api.Project
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
 
-open class LocalizerExtension {
+open class LocalizerExtension(project: Project) {
 
-    val apiToken: Property<String>
-    val projectId: Property<String>
-    val resourcesPath: Property<String>
-    val exportLocale: Property<String>
-    val overwriteOnExport: Property<String>
-    val syncTerms: Property<String>
-    val filters: ListProperty<String>
+    val apiToken: Property<String> = project.objects.property(String::class.java)
+    val projectId: Property<String> = project.objects.property(String::class.java)
+    val resourcesPath: Property<String> = project.objects.property(String::class.java)
+    val exportLocale: Property<String> = project.objects.property(String::class.java)
+    val overwriteOnExport: Property<String> = project.objects.property(String::class.java)
+    val syncTerms: Property<String> = project.objects.property(String::class.java)
+    val filters: ListProperty<String> = project.objects.listProperty(String::class.java)
 
-    constructor(project: Project) {
-        apiToken = project.objects.property(String::class.java)
-        projectId = project.objects.property(String::class.java)
-        resourcesPath = project.objects.property(String::class.java)
-        exportLocale = project.objects.property(String::class.java)
-        overwriteOnExport = project.objects.property(String::class.java)
-        syncTerms = project.objects.property(String::class.java)
-        filters = project.objects.listProperty(String::class.java)
-    }
 }

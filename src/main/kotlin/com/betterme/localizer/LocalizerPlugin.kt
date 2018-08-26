@@ -25,3 +25,5 @@ open class LocalizerPlugin : Plugin<Project> {
         }
     }
 }
+
+

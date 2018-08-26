@@ -1,7 +1,6 @@
 package com.betterme.localizer
 
 import com.betterme.localizer.core.TranslationsLoaderFactory
-import com.betterme.localizer.data.constants.Filters
 import com.betterme.localizer.data.models.ApiParams
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
