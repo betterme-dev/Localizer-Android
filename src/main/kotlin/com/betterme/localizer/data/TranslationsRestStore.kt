@@ -12,9 +12,9 @@ import java.io.IOException
 
 internal interface TranslationsRestStore {
 
-    fun loadTranslationsUrls(locales: List<String>, filters: List<String>, apiParams: ApiParams): Map<String, String>
+    fun loadTranslationsUrls(locales: List<String>, filters: List<String>, tags: List<String>, apiParams: ApiParams): Map<String, String>
 
-    fun loadTranslationsUrl(locale: String, filters: List<String>, apiParams: ApiParams): String
+    fun loadTranslationsUrl(locale: String, filters: List<String>, tags: List<String>, apiParams: ApiParams): String
 
     fun loadTranslationsContent(translationsUrl: String): String
 
@@ -28,17 +28,17 @@ internal class TranslationsRestStoreImpl(
         private val gson: Gson
 ) : TranslationsRestStore {
 
-    override fun loadTranslationsUrls(locales: List<String>, filters: List<String>, apiParams: ApiParams): Map<String, String> {
+    override fun loadTranslationsUrls(locales: List<String>, filters: List<String>, tags: List<String>, apiParams: ApiParams): Map<String, String> {
         val urls = mutableMapOf<String, String>()
         locales.forEach { locale ->
-            val url = loadTranslationsUrl(locale, filters, apiParams)
+            val url = loadTranslationsUrl(locale, filters, tags, apiParams)
             urls[locale] = url
         }
         return urls
     }
 
-    override fun loadTranslationsUrl(locale: String, filters: List<String>, apiParams: ApiParams): String {
-        val postRequest = createTranslationsExportRequest(locale, apiParams.apiToken, apiParams.projectId, filters)
+    override fun loadTranslationsUrl(locale: String, filters: List<String>, tags: List<String>, apiParams: ApiParams): String {
+        val postRequest = createTranslationsExportRequest(locale, apiParams.apiToken, apiParams.projectId, filters, tags)
 
         val postResponse = okHttpClient.newCall(postRequest).execute()
         if (!postResponse.isSuccessful) {
@@ -90,7 +90,7 @@ internal class TranslationsRestStoreImpl(
         return
     }
 
-    private fun createTranslationsExportRequest(locale: String, apiToken: String, projectId: String, filters: List<String>): Request {
+    private fun createTranslationsExportRequest(locale: String, apiToken: String, projectId: String, filters: List<String>, tags: List<String>): Request {
         val requestBodyBuilder = FormBody.Builder()
                 .add(MetaDataContants.Params.PARAM_API_TOKEN, apiToken)
                 .add(MetaDataContants.Params.PARAM_PROJECT_ID, projectId)
@@ -98,8 +98,13 @@ internal class TranslationsRestStoreImpl(
                 .add(MetaDataContants.Params.PARAM_TYPE, MetaDataContants.Values.VALUE_TYPE_ANDROID_STRINGS)
 
         if (filters.isNotEmpty()) {
-            val formattedFilters = getFormattedFilters(filters)
+            val formattedFilters = getFormattedArray(filters)
             requestBodyBuilder.add(MetaDataContants.Params.PARAM_FILTERS, formattedFilters)
+        }
+
+        if (tags.isNotEmpty()) {
+            val formattedTags = getFormattedArray(tags)
+            requestBodyBuilder.add(MetaDataContants.Params.PARAM_TAGS, formattedTags)
         }
 
         val requestBody = requestBodyBuilder.build()
@@ -138,8 +143,8 @@ internal class TranslationsRestStoreImpl(
                 .build()
     }
 
-    private fun getFormattedFilters(filters: List<String>): String {
-        return filters.joinToString(prefix = "[", postfix = "]", separator = ", ") { "\"$it\"" }
+    private fun getFormattedArray(array: List<String>): String {
+        return array.joinToString(prefix = "[", postfix = "]", separator = ", ") { "\"$it\"" }
     }
 
 }
