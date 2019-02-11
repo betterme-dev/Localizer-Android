@@ -13,5 +13,6 @@ open class LocalizerExtension(project: Project) {
     val overwriteOnExport: Property<String> = project.objects.property(String::class.java)
     val syncTerms: Property<String> = project.objects.property(String::class.java)
     val filters: ListProperty<String> = project.objects.listProperty(String::class.java)
+    val tags: ListProperty<String> = project.objects.listProperty(String::class.java)
 
 }

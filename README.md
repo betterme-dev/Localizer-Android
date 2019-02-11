@@ -39,6 +39,9 @@ localizer {
     overwriteOnExport = "true"
     syncTerms = "true"
     exportLocale = "en"
+    
+    filters = ["translated"]
+    tags = ["android"]
 }
 ```
 
@@ -60,6 +63,10 @@ there are some typos in POEditor translations or special symbols need to be used
 that need to be applied to remote versions of your strings.
 
 `syncTerms`: allows or denies (if set to false) two-sided strings synchronization with POEditor API, and automatically removes strings remotely deleted locally.
+
+`filters`: Filter strings by 'translated', 'untranslated', 'fuzzy', 'not_fuzzy', 'automatic', 'not_automatic', 'proofread', 'not_proofread' (only available when Proofreading is set to "Yes" in Project Settings).
+
+`tags`: Filter strings by tags.
 
 Finally, this plugin is ready to use!
 
