@@ -31,6 +31,9 @@ internal class TranslationsLocalStoreImpl : TranslationsLocalStore {
                 MetaDataContants.Values.Locales.VALUE_ENG) {
 
             "$resFolderPath/values"
+        } else if (locale.contains(Regex("[a-z\\-A-Z]"))) {
+            val processedRegionalLocale = locale.replace("-", "-r")
+            "$resFolderPath/values-$processedRegionalLocale"
         } else {
             "$resFolderPath/values-${locale.toLowerCase()}"
         }
