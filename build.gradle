@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'com.betterme.localizer'
-version '1.0.1'
+version '1.0.2'
 
 repositories {
     jcenter()
@@ -60,7 +60,7 @@ pluginBundle {
     plugins {
         localizer {
             displayName = 'localizer'
-            version = '1.0.1'
+            version = '1.0.2'
         }
     }
 }
