@@ -5,15 +5,15 @@ import java.io.File
 
 internal interface TranslationsLocalStore {
 
-    fun saveToFile(resFolderPath: String, fileContents: String, locale: String)
+    fun saveToFile(resFolderPath: String, fileContents: String, locale: String, supportRegions: Boolean)
 
-    fun getStringsFilePath(resFolderPath: String, locale: String): String
+    fun getStringsFilePath(resFolderPath: String, locale: String, supportRegions: Boolean): String
 }
 
 internal class TranslationsLocalStoreImpl : TranslationsLocalStore {
 
-    override fun saveToFile(resFolderPath: String, fileContents: String, locale: String) {
-        val fileName = getStringsFilePath(resFolderPath, locale)
+    override fun saveToFile(resFolderPath: String, fileContents: String, locale: String, supportRegions: Boolean) {
+        val fileName = getStringsFilePath(resFolderPath, locale, supportRegions)
         val translationFile = File(fileName)
         if (!translationFile.parentFile.exists()) {
             translationFile.parentFile.mkdir()
@@ -26,14 +26,19 @@ internal class TranslationsLocalStoreImpl : TranslationsLocalStore {
         }
     }
 
-    override fun getStringsFilePath(resFolderPath: String, locale: String): String {
+    override fun getStringsFilePath(resFolderPath: String, locale: String, supportRegions: Boolean): String {
+        val isRegionalLocale = locale.contains(Regex("[a-z\\-A-Z]"))
+
         val valuesFolderPrefix = if (locale.isEmpty() || locale ==
                 MetaDataContants.Values.Locales.VALUE_ENG) {
 
             "$resFolderPath/values"
-        } else if (locale.contains(Regex("[a-z\\-A-Z]"))) {
+        } else if (isRegionalLocale && supportRegions) {
             val processedRegionalLocale = locale.replace("-", "-r")
             "$resFolderPath/values-$processedRegionalLocale"
+        } else if (isRegionalLocale) {
+            val processedLocaleName = locale.replace(Regex("[\\-A-Z]"), "")
+            "$resFolderPath/values-$processedLocaleName"
         } else {
             "$resFolderPath/values-${locale.toLowerCase()}"
         }

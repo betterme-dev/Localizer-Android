@@ -12,6 +12,7 @@ open class TranslationsDownloaderTask : DefaultTask() {
     @Input val apiToken = project.objects.property(String::class.java)
     @Input val projectId = project.objects.property(String::class.java)
     @Input val resourcesPath = project.objects.property(String::class.java)
+    @get:Input @get:Optional val supportRegions = project.objects.property(String::class.java)
     @get:Input @get:Optional val filters = project.objects.listProperty(String::class.java)
     @get:Input @get:Optional val tags = project.objects.listProperty(String::class.java)
 
@@ -20,10 +21,15 @@ open class TranslationsDownloaderTask : DefaultTask() {
         group = "translations"
     }
 
+    @Suppress("UNNECESSARY_SAFE_CALL")
     @TaskAction
     fun downloadTranslations() {
         val apiParams = ApiParams(apiToken = apiToken.get(), projectId = projectId.get())
         val translationsLoader = TranslationsLoaderFactory.create(apiParams)
-        translationsLoader.downloadLocalizedStrings(resourcesPath.get(), filters.getOrElse(emptyList()), tags.getOrElse(emptyList()))
+        translationsLoader.downloadLocalizedStrings(
+                resFolderPath = resourcesPath.get(),
+                filters = filters.getOrElse(emptyList()),
+                tags = tags.getOrElse(emptyList()),
+                supportRegions = supportRegions.get()?.toBoolean() ?: false)
     }
 }

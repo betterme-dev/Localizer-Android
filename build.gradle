@@ -19,9 +19,8 @@ ext {
     gsonVer = '2.8.2'
     okHttpVer = '3.11.0'
     jUnitVer = '4.12'
-    assertJVer = '3.8.0'
-    mockitoVer = '2.12.0'
-    mockitoKotlinVer = '1.5.0'
+    jupiterVer = '5.4.0'
+    assertJVer = '3.12.0'
 }
 
 dependencies {
@@ -37,13 +36,10 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:$okHttpVer"
 
     // Unit-tests
-    testImplementation "junit:junit:$jUnitVer"
-    testImplementation "org.mockito:mockito-core:$mockitoVer"
-    testImplementation "org.mockito:mockito-inline:$mockitoVer"
-    testImplementation("com.nhaarman:mockito-kotlin-kt1.1:$mockitoKotlinVer") {
-        exclude group: 'org.jetbrains.kotlin'
-        exclude group: 'org.mockito'
-    }
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$jupiterVer"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:$jupiterVer"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:$jupiterVer"
+    testImplementation "org.assertj:assertj-core:$assertJVer"
 }
 
 gradlePlugin {
@@ -64,7 +60,7 @@ pluginBundle {
     plugins {
         localizer {
             displayName = 'localizer'
-            version = '1.0.0'
+            version = '1.0.1'
         }
     }
 }
@@ -74,4 +70,7 @@ compileKotlin {
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
+}
+wrapper {
+    gradleVersion = '5.0'
 }

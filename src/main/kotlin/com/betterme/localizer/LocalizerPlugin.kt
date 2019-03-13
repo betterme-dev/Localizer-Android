@@ -15,6 +15,7 @@ open class LocalizerPlugin : Plugin<Project> {
             it.exportLocale.set(extension.exportLocale)
             it.overwriteOnExport.set(extension.overwriteOnExport)
             it.syncTerms.set(extension.syncTerms)
+            it.supportRegions.set(extension.supportRegions)
         }
 
         project.tasks.create("downloadTranslations", TranslationsDownloaderTask::class.java) {
@@ -23,6 +24,7 @@ open class LocalizerPlugin : Plugin<Project> {
             it.resourcesPath.set(extension.resourcesPath)
             it.filters.addAll(extension.filters)
             it.tags.addAll(extension.tags)
+            it.supportRegions.set(extension.supportRegions)
         }
     }
 }
