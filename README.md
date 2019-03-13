@@ -14,7 +14,7 @@ buildscript {
         maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        final localizerVer = '1.0.0'
+        final localizerVer = '1.0.4'
 
         classpath "gradle.plugin.com.betterme.localizer:localizer-android:$localizerVer"
     }
@@ -39,6 +39,7 @@ localizer {
     overwriteOnExport = "true"
     syncTerms = "true"
     exportLocale = "en"
+    supportRegions = "true" // optional, false by default
     
     filters = ["translated"]
     tags = ["android"]
@@ -67,6 +68,8 @@ that need to be applied to remote versions of your strings.
 `filters`: Filter strings by 'translated', 'untranslated', 'fuzzy', 'not_fuzzy', 'automatic', 'not_automatic', 'proofread', 'not_proofread' (only available when Proofreading is set to "Yes" in Project Settings).
 
 `tags`: Filter strings by tags.
+
+`supportRegions`: enables or disables (if set to false or not defined) regional locales support (which are usually defined in the following pattern in POEditor zh_CH).
 
 Finally, this plugin is ready to use!
 
