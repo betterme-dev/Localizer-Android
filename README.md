@@ -69,7 +69,7 @@ that need to be applied to remote versions of your strings.
 
 `tags`: Filter strings by tags.
 
-`supportRegions`: enables or disables (if set to false or not defined) regional locales support (which are usually defined in the following pattern in POEditor zh_CH).
+`supportRegions`: enables or disables (if set to false or not defined) regional locales support (which are usually defined in the following pattern in POEditor zh_CH). By default, or if set to false externally, the regional postfix (i.e. `_CH` in `zh_CH` will be omitted).
 
 Finally, this plugin is ready to use!
 
