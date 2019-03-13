@@ -21,7 +21,7 @@ open class TranslationsDownloaderTask : DefaultTask() {
         group = "translations"
     }
 
-    @Suppress("UNNECESSARY_SAFE_CALL")
+    @Suppress("UNNECESSARY_SAFE_CALL", "PlatformExtensionReceiverOfInline")
     @TaskAction
     fun downloadTranslations() {
         val apiParams = ApiParams(apiToken = apiToken.get(), projectId = projectId.get())
@@ -30,6 +30,6 @@ open class TranslationsDownloaderTask : DefaultTask() {
                 resFolderPath = resourcesPath.get(),
                 filters = filters.getOrElse(emptyList()),
                 tags = tags.getOrElse(emptyList()),
-                supportRegions = supportRegions.get()?.toBoolean() ?: false)
+                supportRegions = supportRegions.getOrElse("false").toBoolean())
     }
 }

@@ -22,7 +22,7 @@ open class TranslationsUploaderTask : DefaultTask() {
         group = "translations"
     }
 
-    @Suppress("PlatformExtensionReceiverOfInline", "UNNECESSARY_SAFE_CALL", "unused")
+    @Suppress("PlatformExtensionReceiverOfInline", "unused")
     @TaskAction
     fun uploadTranslations() {
         val apiParams = ApiParams(apiToken = apiToken.get(), projectId = projectId.get())
@@ -30,6 +30,6 @@ open class TranslationsUploaderTask : DefaultTask() {
         translationsLoader.uploadTermsAndTranslations(resourcesPath.get(), exportLocale.get(),
                 /* Small temp hack to avoid Groovy and Kotlin boolean incompatibility issue */
                 overwriteOnExport.get().toBoolean(), syncTerms.get().toBoolean(),
-                supportRegions.get()?.toBoolean() ?: false)
+                supportRegions.getOrElse("false").toBoolean())
     }
 }
