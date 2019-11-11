@@ -7,6 +7,7 @@ import com.betterme.localizer.data.TranslationsRestStoreImpl
 import com.betterme.localizer.data.models.ApiParams
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
+import java.util.concurrent.TimeUnit
 
 class TranslationsLoaderFactory {
 
@@ -21,7 +22,12 @@ class TranslationsLoaderFactory {
         }
 
         private fun translationsRestStore(): TranslationsRestStore {
-            return TranslationsRestStoreImpl(OkHttpClient(), Gson())
+            val client = OkHttpClient.Builder()
+                .connectTimeout(1, TimeUnit.MINUTES)
+                .writeTimeout(1, TimeUnit.MINUTES)
+                .readTimeout(1, TimeUnit.MINUTES)
+                .build()//poeditor API seems to be slow to generate large translation files
+            return TranslationsRestStoreImpl(client, Gson())
         }
 
         private fun translationsLocalStore(): TranslationsLocalStore = TranslationsLocalStoreImpl()
