@@ -14,7 +14,7 @@ buildscript {
         maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        final localizerVer = '1.0.4'
+        final localizerVer = '1.0.5'
 
         classpath "gradle.plugin.com.betterme.localizer:localizer-android:$localizerVer"
     }
