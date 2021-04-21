@@ -1,7 +1,7 @@
 # Localizer-Android
 Gradle plugin which simplifies Android string resources &amp; translations synchronization with POEditor (API v2).
 
-With the help of this plugin you can either download strings.xml for all existing locales in your project or 
+With the help of this plugin you can either download strings.xml for all existing locales in your project or
 export your own terms and translations to POEdtior in order to keep both sources - local and remote - up-to-date.
 
 ## Configuration
@@ -14,7 +14,7 @@ buildscript {
         maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        final localizerVer = '1.0.5'
+        final localizerVer = '1.0.6'
 
         classpath "gradle.plugin.com.betterme.localizer:localizer-android:$localizerVer"
     }
@@ -40,7 +40,7 @@ localizer {
     syncTerms = "true"
     exportLocale = "en"
     supportRegions = "true" // optional, false by default
-    
+
     filters = ["translated"]
     tags = ["android"]
 }
@@ -52,15 +52,15 @@ localizer {
 
 `resourcesPath`: path to your values folder in current project.
 
-It's important to convert `resourcesPath` to Groovy String type with `toString()` method for compatibility with 
+It's important to convert `resourcesPath` to Groovy String type with `toString()` method for compatibility with
 Java type system.
 
 `overwriteOnExport`: allows or denies (if set to false) strings overwriting on their upload.
 
 `exportLocale`: desired locale for local strings resources to be uploaded to POEditor. Usually, should be
-set to your default language ("en"), as it's the most common case when you need to keep your English 
-(as primary ones) terms up-to-date in POEditor as well. But other languages may also be the case if 
-there are some typos in POEditor translations or special symbols need to be used in remote strings.xml, 
+set to your default language ("en"), as it's the most common case when you need to keep your English
+(as primary ones) terms up-to-date in POEditor as well. But other languages may also be the case if
+there are some typos in POEditor translations or special symbols need to be used in remote strings.xml,
 that need to be applied to remote versions of your strings.
 
 `syncTerms`: allows or denies (if set to false) two-sided strings synchronization with POEditor API, and automatically removes strings remotely deleted locally.
@@ -70,6 +70,8 @@ that need to be applied to remote versions of your strings.
 `tags`: Filter strings by tags.
 
 `supportRegions`: enables or disables (if set to false or not defined) regional locales support (which are usually defined in the following pattern in POEditor zh_CH). By default, or if set to false externally, the regional postfix (i.e. `_CH` in `zh_CH` will be omitted).
+
+`languageFilters`: (optional) filters available languages to download. Eg. ['en', 'tr'] Default is all available languages.
 
 Finally, this plugin is ready to use!
 

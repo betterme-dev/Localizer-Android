@@ -13,6 +13,7 @@ internal interface TranslationsLocalStore {
 internal class TranslationsLocalStoreImpl : TranslationsLocalStore {
 
     override fun saveToFile(resFolderPath: String, fileContents: String, locale: String, supportRegions: Boolean) {
+        if (fileContents.isBlank()) return
         val fileName = getStringsFilePath(resFolderPath, locale, supportRegions)
         val translationFile = File(fileName)
         if (!translationFile.parentFile.exists()) {
@@ -30,7 +31,7 @@ internal class TranslationsLocalStoreImpl : TranslationsLocalStore {
         val isRegionalLocale = locale.contains(Regex("[a-z\\-A-Z]"))
 
         val valuesFolderPrefix = if (locale.isEmpty() || locale ==
-                MetaDataContants.Values.Locales.VALUE_ENG) {
+            MetaDataContants.Values.Locales.VALUE_ENG) {
 
             "$resFolderPath/values"
         } else if (isRegionalLocale && supportRegions) {

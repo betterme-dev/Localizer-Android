@@ -13,8 +13,9 @@ interface TranslationsLoader {
      * @param filters list of filters by which the downloaded strings will be filtered: 'translated', 'untranslated',
      *              'fuzzy', 'not_fuzzy', 'automatic', 'not_automatic', 'proofread', 'not_proofread'
      * @param tags list of tags, by which the downloaded strings will be filtered.
+     * @param languageFilters list of supported languages, other languages available will be filtered. Eg. ['en','tr']
      */
-    fun downloadLocalizedStrings(resFolderPath: String, filters: List<String>, tags: List<String>, supportRegions: Boolean)
+    fun downloadLocalizedStrings(resFolderPath: String, filters: List<String>, tags: List<String>, supportRegions: Boolean, languageFilters: List<String>)
 
     /**
      * Uploads original strings.xml file to POEditor for a given exportLocale.
@@ -27,16 +28,20 @@ interface TranslationsLoader {
 }
 
 internal class TranslationsLoaderImpl(
-        private val localStore: TranslationsLocalStore,
-        private val restStore: TranslationsRestStore,
-        private val apiParams: ApiParams
+    private val localStore: TranslationsLocalStore,
+    private val restStore: TranslationsRestStore,
+    private val apiParams: ApiParams
 ) : TranslationsLoader {
 
-    override fun downloadLocalizedStrings(resFolderPath: String, filters: List<String>, tags: List<String>, supportRegions: Boolean) {
-        val availableLocales = restStore.getAvailableLanguages(apiParams)
+    override fun downloadLocalizedStrings(resFolderPath: String, filters: List<String>, tags: List<String>, supportRegions: Boolean, languageFilters: List<String>) {
+        var availableLocales = restStore.getAvailableLanguages(apiParams)
         println("Retrieved list of locales available for this project: $availableLocales")
+        if (languageFilters.isNotEmpty()) {
+            availableLocales = availableLocales.intersect(languageFilters).toList()
+            println("Filtered list of locales available for this project: $availableLocales")
+        }
         val urls = restStore.loadTranslationsUrls(availableLocales, filters, tags, apiParams)
-        urls.forEach { locale, url ->
+        urls.forEach { (locale, url) ->
             println("Starting translations for exportLocale $locale download with filters [$filters] and tags [$tags]")
             val fileContent = restStore.loadTranslationsContent(url)
             println("Saving translations for exportLocale $locale")

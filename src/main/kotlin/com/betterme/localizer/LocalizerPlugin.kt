@@ -27,6 +27,7 @@ open class LocalizerPlugin : Plugin<Project> {
             it.filters.addAll(extension.filters)
             it.tags.addAll(extension.tags)
             it.supportRegions.set(supportRegions)
+            it.languageFilters.set(extension.languageFilters)
         }
     }
 }
