@@ -43,6 +43,9 @@ localizer {
 
     filters = ["translated"]
     tags = ["android"]
+    
+    languageFilters = ['en', 'tr'] // optional, empty by default
+    languageCodeMap = ["id":"in"] // optional, empty by default
 }
 ```
 
@@ -72,6 +75,8 @@ that need to be applied to remote versions of your strings.
 `supportRegions`: enables or disables (if set to false or not defined) regional locales support (which are usually defined in the following pattern in POEditor zh_CH). By default, or if set to false externally, the regional postfix (i.e. `_CH` in `zh_CH` will be omitted).
 
 `languageFilters`: (optional) filters available languages to download. Eg. ['en', 'tr'] Default is all available languages.
+
+`languageCodeMap`: (optional) maps locales to desired one. Eg. ["id", "in"] Default is no mapping
 
 Finally, this plugin is ready to use!
 

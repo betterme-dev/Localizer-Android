@@ -15,7 +15,7 @@ interface TranslationsLoader {
      * @param tags list of tags, by which the downloaded strings will be filtered.
      * @param languageFilters list of supported languages, other languages available will be filtered. Eg. ['en','tr']
      */
-    fun downloadLocalizedStrings(resFolderPath: String, filters: List<String>, tags: List<String>, supportRegions: Boolean, languageFilters: List<String>)
+    fun downloadLocalizedStrings(resFolderPath: String, filters: List<String>, tags: List<String>, supportRegions: Boolean, languageFilters: List<String>, languageCodeMap: Map<String, String>)
 
     /**
      * Uploads original strings.xml file to POEditor for a given exportLocale.
@@ -33,9 +33,10 @@ internal class TranslationsLoaderImpl(
     private val apiParams: ApiParams
 ) : TranslationsLoader {
 
-    override fun downloadLocalizedStrings(resFolderPath: String, filters: List<String>, tags: List<String>, supportRegions: Boolean, languageFilters: List<String>) {
+    override fun downloadLocalizedStrings(resFolderPath: String, filters: List<String>, tags: List<String>, supportRegions: Boolean, languageFilters: List<String>, languageCodeMap: Map<String, String>) {
         var availableLocales = restStore.getAvailableLanguages(apiParams)
         println("Retrieved list of locales available for this project: $availableLocales")
+        println("Map locales for this project: $languageCodeMap")
         if (languageFilters.isNotEmpty()) {
             availableLocales = availableLocales.intersect(languageFilters).toList()
             println("Filtered list of locales available for this project: $availableLocales")
@@ -44,8 +45,9 @@ internal class TranslationsLoaderImpl(
         urls.forEach { (locale, url) ->
             println("Starting translations for exportLocale $locale download with filters [$filters] and tags [$tags]")
             val fileContent = restStore.loadTranslationsContent(url)
-            println("Saving translations for exportLocale $locale")
-            localStore.saveToFile(resFolderPath, fileContent, locale, supportRegions)
+            println("Saving translations for exportLocale $locale , mappedLocale ${languageCodeMap[locale]}")
+            val mappedLocale = languageCodeMap[locale] ?: locale
+            localStore.saveToFile(resFolderPath, fileContent, mappedLocale, supportRegions)
         }
     }
 

@@ -1,5 +1,5 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.2.60'
+    id 'org.jetbrains.kotlin.jvm' version '1.4.31'
     id 'java-gradle-plugin'
     id "com.gradle.plugin-publish" version '0.10.0'
 }
@@ -11,13 +11,13 @@ repositories {
     jcenter()
 }
 
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
 
 ext {
-    kotlinVer = '1.2.60'
-    gsonVer = '2.8.2'
-    okHttpVer = '3.11.0'
+    kotlinVer = '1.4.31'
+    gsonVer = '2.8.6'
+    okHttpVer = '4.9.1'
     jUnitVer = '4.12'
     jupiterVer = '5.4.0'
     assertJVer = '3.12.0'

@@ -7,6 +7,8 @@ import com.betterme.localizer.data.models.TranslationsDownloadResponse
 import com.betterme.localizer.data.models.TranslationsUploadResponse
 import com.google.gson.Gson
 import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.io.IOException
 
@@ -44,7 +46,7 @@ internal class TranslationsRestStoreImpl(
         if (!postResponse.isSuccessful) {
             throw IOException("Could not execute export request: $postResponse")
         }
-        val postResponseString = postResponse.body()?.string()
+        val postResponseString = postResponse.body?.string()
         val fileResult = gson.fromJson(postResponseString, TranslationsDownloadResponse::class.java)
         return fileResult.result.url
     }
@@ -56,7 +58,7 @@ internal class TranslationsRestStoreImpl(
 
         val fileResponse = okHttpClient.newCall(fileLoadingRequest).execute()
         if (!fileResponse.isSuccessful) throw IOException()
-        return fileResponse.body()?.string() ?: throw IllegalStateException("Could not retrieve " +
+        return fileResponse.body?.string() ?: throw IllegalStateException("Could not retrieve " +
                 "file contents")
     }
 
@@ -72,7 +74,7 @@ internal class TranslationsRestStoreImpl(
 
         val rawLanguageResponse = okHttpClient.newCall(request).execute()
         if (!rawLanguageResponse.isSuccessful) throw IOException("Could not execute languages retrieval response")
-        val languageResponseString = rawLanguageResponse.body()?.string()
+        val languageResponseString = rawLanguageResponse.body?.string()
         val languageResponse = gson.fromJson(languageResponseString, AvailableLanguagesResponse::class.java)
         return languageResponse.result.languages.map { it.code }
     }
@@ -83,7 +85,7 @@ internal class TranslationsRestStoreImpl(
 
         val fileResponse = okHttpClient.newCall(fileUploadingRequest).execute()
         if (!fileResponse.isSuccessful) throw IOException()
-        val fileResponseString = fileResponse.body()?.string() ?: throw IllegalStateException("Could " +
+        val fileResponseString = fileResponse.body?.string() ?: throw IllegalStateException("Could " +
                 "not upload translations file")
         val uploadResponse = gson.fromJson(fileResponseString, TranslationsUploadResponse::class.java)
         println("Translations file $filePath upload response: $uploadResponse")
@@ -125,8 +127,7 @@ internal class TranslationsRestStoreImpl(
 
         val fileRequestBody = MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("file", filePath, RequestBody
-                        .create(MediaType.parse("xml"), File(filePath)))
+                .addFormDataPart("file", filePath, File(filePath).asRequestBody("xml".toMediaType()))
                 .addFormDataPart(MetaDataContants.Params.PARAM_API_TOKEN, apiToken)
                 .addFormDataPart(MetaDataContants.Params.PARAM_PROJECT_ID, projectId)
                 .addFormDataPart(MetaDataContants.Params.PARAM_LANGUAGE, locale)
