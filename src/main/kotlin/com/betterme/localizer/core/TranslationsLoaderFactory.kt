@@ -16,9 +16,13 @@ class TranslationsLoaderFactory {
         /**
          * @param apiParams params necessary for interaction with POEditor API.
          */
-        @JvmStatic fun create(apiParams: ApiParams): TranslationsLoader {
-            return TranslationsLoaderImpl(translationsLocalStore(), translationsRestStore(),
-                    apiParams)
+        @JvmStatic
+        fun create(apiParams: ApiParams): TranslationsLoader {
+            return TranslationsLoaderImpl(
+                apiParams = apiParams,
+                restStore = translationsRestStore(),
+                localStore = translationsLocalStore()
+            )
         }
 
         private fun translationsRestStore(): TranslationsRestStore {
@@ -26,7 +30,7 @@ class TranslationsLoaderFactory {
                 .connectTimeout(1, TimeUnit.MINUTES)
                 .writeTimeout(1, TimeUnit.MINUTES)
                 .readTimeout(1, TimeUnit.MINUTES)
-                .build()//poeditor API seems to be slow to generate large translation files
+                .build() // PoEditor API seems to be slow to generate large translation files
             return TranslationsRestStoreImpl(client, Gson())
         }
 

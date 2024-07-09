@@ -7,6 +7,6 @@ internal data class AvailableLanguagesResponse(@SerializedName("result") val res
 internal data class Result(@SerializedName("languages") val languages: List<LanguageItem>)
 
 internal data class LanguageItem(
-        val name: String,
-        val code: String
+    val name: String,
+    val code: String
 )

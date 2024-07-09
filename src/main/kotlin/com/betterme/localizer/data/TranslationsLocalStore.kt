@@ -5,14 +5,24 @@ import java.io.File
 
 internal interface TranslationsLocalStore {
 
-    fun saveToFile(resFolderPath: String, fileContents: String, locale: String, supportRegions: Boolean)
+    fun saveToFile(
+        resFolderPath: String,
+        fileContents: String,
+        locale: String,
+        supportRegions: Boolean
+    )
 
     fun getStringsFilePath(resFolderPath: String, locale: String, supportRegions: Boolean): String
 }
 
 internal class TranslationsLocalStoreImpl : TranslationsLocalStore {
 
-    override fun saveToFile(resFolderPath: String, fileContents: String, locale: String, supportRegions: Boolean) {
+    override fun saveToFile(
+        resFolderPath: String,
+        fileContents: String,
+        locale: String,
+        supportRegions: Boolean
+    ) {
         val fileName = getStringsFilePath(resFolderPath, locale, supportRegions)
         val translationFile = File(fileName)
         if (!translationFile.parentFile.exists()) {
@@ -26,11 +36,16 @@ internal class TranslationsLocalStoreImpl : TranslationsLocalStore {
         }
     }
 
-    override fun getStringsFilePath(resFolderPath: String, locale: String, supportRegions: Boolean): String {
+    override fun getStringsFilePath(
+        resFolderPath: String,
+        locale: String,
+        supportRegions: Boolean
+    ): String {
         val isRegionalLocale = locale.contains(Regex("[a-z\\-A-Z]"))
 
         val valuesFolderPrefix = if (locale.isEmpty() || locale ==
-                MetaDataContants.Values.Locales.VALUE_ENG) {
+            MetaDataContants.Values.Locales.VALUE_ENG
+        ) {
 
             "$resFolderPath/values"
         } else if (isRegionalLocale && supportRegions) {
@@ -40,7 +55,7 @@ internal class TranslationsLocalStoreImpl : TranslationsLocalStore {
             val processedLocaleName = locale.replace(Regex("[\\-A-Z]"), "")
             "$resFolderPath/values-$processedLocaleName"
         } else {
-            "$resFolderPath/values-${locale.toLowerCase()}"
+            "$resFolderPath/values-${locale.lowercase()}"
         }
         return "$valuesFolderPrefix/strings.xml"
     }
