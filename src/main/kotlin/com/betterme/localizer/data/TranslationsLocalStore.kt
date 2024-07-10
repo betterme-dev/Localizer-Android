@@ -1,7 +1,9 @@
 package com.betterme.localizer.data
 
-import com.betterme.localizer.data.constants.MetaDataContants
 import java.io.File
+import com.betterme.localizer.data.constants.MetaDataContants.Values.Locales
+import com.betterme.localizer.data.constants.MetaDataContants.Values.Locales.isDutch
+import com.betterme.localizer.data.constants.MetaDataContants.Values.Locales.isHebrew
 
 internal interface TranslationsLocalStore {
 
@@ -34,6 +36,14 @@ internal class TranslationsLocalStoreImpl : TranslationsLocalStore {
         translationFile.bufferedWriter().use { out ->
             out.write(fileContents)
         }
+        // Almost identical https://en.wikipedia.org/wiki/Comparison_of_Afrikaans_and_Dutch
+        if (locale.isDutch()) {
+            saveToFile(resFolderPath, fileContents, Locales.VALUE_AF, supportRegions)
+        }
+        // To handle this particular scenario https://stackoverflow.com/a/8202428
+        if (locale.isHebrew()) {
+            saveToFile(resFolderPath, fileContents, Locales.VALUE_IW, supportRegions)
+        }
     }
 
     override fun getStringsFilePath(
@@ -43,10 +53,9 @@ internal class TranslationsLocalStoreImpl : TranslationsLocalStore {
     ): String {
         val isRegionalLocale = locale.contains(Regex("[a-z\\-A-Z]"))
 
-        val valuesFolderPrefix = if (locale.isEmpty() || locale ==
-            MetaDataContants.Values.Locales.VALUE_ENG
+        val valuesFolderPrefix = if (
+            locale.isEmpty() || locale == Locales.VALUE_ENG
         ) {
-
             "$resFolderPath/values"
         } else if (isRegionalLocale && supportRegions) {
             val processedRegionalLocale = locale.replace("-", "-r")
