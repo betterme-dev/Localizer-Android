@@ -25,6 +25,7 @@ internal class TranslationsLocalStoreImpl : TranslationsLocalStore {
         locale: String,
         supportRegions: Boolean
     ) {
+        if (fileContents.isEmpty()) return
         val fileName = getStringsFilePath(resFolderPath, locale, supportRegions)
         val translationFile = File(fileName)
         if (!translationFile.parentFile.exists()) {

@@ -91,8 +91,7 @@ internal class TranslationsRestStoreImpl(
         val fileResponse = okHttpClient.newCall(fileLoadingRequest).execute()
         if (!fileResponse.isSuccessful) throw IOException()
         return fileResponse.body?.string() ?: throw IllegalStateException(
-            "Could not retrieve " +
-                    "file contents"
+            "Could not retrieve file contents"
         )
     }
 
