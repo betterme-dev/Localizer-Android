@@ -1,12 +1,12 @@
-package com.betterme.localizer
+package world.betterme.localizer
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.provider.Property
-import com.betterme.localizer.data.models.ApiParams
-import com.betterme.localizer.core.TranslationsLoaderFactory
+import world.betterme.localizer.data.models.ApiParams
+import world.betterme.localizer.core.TranslationsLoaderFactory
 
 open class TranslationsUploaderTask : DefaultTask() {
 

@@ -1,4 +1,4 @@
-package com.betterme.localizer.data.constants
+package world.betterme.localizer.data.constants
 
 internal object MetaDataContants {
 

@@ -1,8 +1,8 @@
-package com.betterme.localizer.core
+package world.betterme.localizer.core
 
-import com.betterme.localizer.data.TranslationsLocalStore
-import com.betterme.localizer.data.TranslationsRestStore
-import com.betterme.localizer.data.models.ApiParams
+import world.betterme.localizer.data.TranslationsLocalStore
+import world.betterme.localizer.data.TranslationsRestStore
+import world.betterme.localizer.data.models.ApiParams
 
 interface TranslationsLoader {
 

@@ -1,4 +1,4 @@
-package com.betterme.localizer
+package world.betterme.localizer
 
 import org.gradle.api.Project
 import org.gradle.api.provider.ListProperty

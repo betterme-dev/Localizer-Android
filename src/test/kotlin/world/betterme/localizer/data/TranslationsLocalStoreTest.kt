@@ -1,11 +1,11 @@
-package com.betterme.localizer.data
+package world.betterme.localizer.data
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import org.assertj.core.api.Assertions.assertThat
-import com.betterme.localizer.data.constants.MetaDataContants
+import world.betterme.localizer.data.constants.MetaDataContants
 
 private const val resFolderPath = "/app/src/main/res"
 

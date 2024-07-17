@@ -1,6 +1,6 @@
-package com.betterme.localizer.data.models
+package world.betterme.localizer.data.models
 
-import com.betterme.localizer.data.constants.MetaDataContants
+import world.betterme.localizer.data.constants.MetaDataContants
 import com.google.gson.annotations.SerializedName
 
 internal data class TranslationsDownloadResponse(

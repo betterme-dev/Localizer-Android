@@ -1,4 +1,4 @@
-package com.betterme.localizer.data.models
+package world.betterme.localizer.data.models
 
 import com.google.gson.annotations.SerializedName
 

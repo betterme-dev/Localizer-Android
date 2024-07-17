@@ -1,4 +1,4 @@
-package com.betterme.localizer.data.constants
+package world.betterme.localizer.data.constants
 
 /**
  * 'translated', 'untranslated', 'fuzzy', 'not_fuzzy', 'automatic', 'not_automatic', 'proofread', 'not_proofread

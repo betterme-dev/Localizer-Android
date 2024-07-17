@@ -1,9 +1,9 @@
-package com.betterme.localizer.data
+package world.betterme.localizer.data
 
 import java.io.File
-import com.betterme.localizer.data.constants.MetaDataContants.Values.Locales
-import com.betterme.localizer.data.constants.MetaDataContants.Values.Locales.isDutch
-import com.betterme.localizer.data.constants.MetaDataContants.Values.Locales.isHebrew
+import world.betterme.localizer.data.constants.MetaDataContants.Values.Locales
+import world.betterme.localizer.data.constants.MetaDataContants.Values.Locales.isDutch
+import world.betterme.localizer.data.constants.MetaDataContants.Values.Locales.isHebrew
 
 internal interface TranslationsLocalStore {
 

@@ -1,4 +1,4 @@
-package com.betterme.localizer
+package world.betterme.localizer
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project

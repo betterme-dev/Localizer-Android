@@ -4,7 +4,7 @@ plugins {
     id "com.gradle.plugin-publish" version '1.2.1'
 }
 
-group 'com.betterme.localizer'
+group 'world.betterme.localizer'
 version '1.0.6'
 
 repositories {
@@ -43,7 +43,7 @@ gradlePlugin {
     vcsUrl = 'https://github.com/betterme-dev/Localizer-Android'
     plugins {
         localizer {
-            id = 'com.betterme.localizer'
+            id = 'world.betterme.localizer'
             displayName = 'localizer'
             description = 'Gradle plugin which simplifies Android string resources & translations synchronization with POEditor.'
             tags = ['translations', 'strings', 'android', 'resources', 'localization', 'values', 'poeditor']

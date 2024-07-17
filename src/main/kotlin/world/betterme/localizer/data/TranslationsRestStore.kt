@@ -1,10 +1,10 @@
-package com.betterme.localizer.data
+package world.betterme.localizer.data
 
-import com.betterme.localizer.data.constants.MetaDataContants
-import com.betterme.localizer.data.models.ApiParams
-import com.betterme.localizer.data.models.AvailableLanguagesResponse
-import com.betterme.localizer.data.models.TranslationsDownloadResponse
-import com.betterme.localizer.data.models.TranslationsUploadResponse
+import world.betterme.localizer.data.constants.MetaDataContants
+import world.betterme.localizer.data.models.ApiParams
+import world.betterme.localizer.data.models.AvailableLanguagesResponse
+import world.betterme.localizer.data.models.TranslationsDownloadResponse
+import world.betterme.localizer.data.models.TranslationsUploadResponse
 import com.google.gson.Gson
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
