@@ -47,7 +47,7 @@ gradlePlugin {
             displayName = 'localizer'
             description = 'Gradle plugin which simplifies Android string resources & translations synchronization with POEditor. ' +
                     'More modern version of (com.betterme.localizer) which is no longer supported.'
-            tags = ['translations', 'strings', 'android', 'resources', 'localization', 'values', 'poeditor']
+            tags = ['translations', 'strings', 'android', 'resources', 'localization', 'poeditor']
             implementationClass = 'world.betterme.localizer.LocalizerPlugin'
         }
     }
