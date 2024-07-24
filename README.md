@@ -16,7 +16,7 @@ buildscript {
     dependencies {
         final localizerVer = '1.0.6'
 
-        classpath "gradle.plugin.world.betterme.localizer:localizer-android:$localizerVer"
+        classpath "world.betterme.localizer:localizer-android:$localizerVer"
     }
 }
 ```
