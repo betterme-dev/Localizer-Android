@@ -1,33 +1,29 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.2.60'
+    id 'org.jetbrains.kotlin.jvm' version '2.0.0'
     id 'java-gradle-plugin'
-    id "com.gradle.plugin-publish" version '0.10.0'
+    id "com.gradle.plugin-publish" version '1.2.1'
 }
 
-group 'com.betterme.localizer'
-version '1.0.5'
+group 'world.betterme.localizer'
+version '1.0.6'
 
 repositories {
     jcenter()
 }
 
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
-
 ext {
-    kotlinVer = '1.2.60'
-    gsonVer = '2.8.2'
-    okHttpVer = '3.11.0'
-    jUnitVer = '4.12'
-    jupiterVer = '5.4.0'
-    assertJVer = '3.12.0'
+    kotlinVer = '2.0.0'
+    gsonVer = '2.11.0'
+    okHttpVer = '4.12.0'
+    jupiterVer = '5.10.3'
+    assertJVer = '3.26.0'
 }
 
 dependencies {
     compileOnly gradleApi()
 
     // Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVer"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVer"
 
     // JSON Parsing
     implementation "com.google.code.gson:gson:$gsonVer"
@@ -43,34 +39,24 @@ dependencies {
 }
 
 gradlePlugin {
-    plugins {
-        localizer {
-            id = 'com.betterme.localizer'
-            implementationClass = 'com.betterme.localizer.LocalizerPlugin'
-        }
-    }
-}
-
-pluginBundle {
-    description = 'Gradle plugin which simplifies Android string resources & translations synchronization with POEditor.'
     website = 'https://github.com/betterme-dev/Localizer-Android'
     vcsUrl = 'https://github.com/betterme-dev/Localizer-Android'
-    tags = ['translations', 'strings', 'android', 'resources', 'localization', 'values', 'poeditor']
-
     plugins {
         localizer {
+            id = 'world.betterme.localizer'
             displayName = 'localizer'
-            version = '1.0.5'
+            description = 'Gradle plugin which simplifies Android string resources & translations synchronization with POEditor. ' +
+                    'More modern version of (com.betterme.localizer) which is no longer supported.'
+            tags = ['translations', 'strings', 'android', 'resources', 'localization', 'poeditor']
+            implementationClass = 'world.betterme.localizer.LocalizerPlugin'
         }
     }
 }
 
-compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+test {
+    useJUnitPlatform()
 }
-compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-}
+
 wrapper {
-    gradleVersion = '5.0'
+    gradleVersion = '8.8'
 }

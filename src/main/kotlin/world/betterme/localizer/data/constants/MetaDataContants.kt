@@ -1,4 +1,4 @@
-package com.betterme.localizer.data.constants
+package world.betterme.localizer.data.constants
 
 internal object MetaDataContants {
 
@@ -27,12 +27,22 @@ internal object MetaDataContants {
 
     object Values {
         const val VALUE_TYPE_ANDROID_STRINGS = "android_strings"
-        const val VALUE_UPDATING_TRANSLATIONS = "translations"
-        const val VALUE_UPDATING_TERMS = "terms"
         const val VALUE_UPDATING_TERMS_AND_TRANSLATIONS = "terms_translations"
 
         object Locales {
             const val VALUE_ENG = "en"
+            const val VALUE_AF = "af"
+            const val VALUE_IW = "iw"
+            private const val VALUE_NL = "nl"
+            private const val VALUE_HE = "he"
+
+            fun String.isDutch(): Boolean {
+                return this == VALUE_NL
+            }
+
+            fun String.isHebrew(): Boolean {
+                return this == VALUE_HE
+            }
         }
     }
 }

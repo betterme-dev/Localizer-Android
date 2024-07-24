@@ -14,9 +14,9 @@ buildscript {
         maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        final localizerVer = '1.0.5'
+        final localizerVer = '1.0.6'
 
-        classpath "gradle.plugin.com.betterme.localizer:localizer-android:$localizerVer"
+        classpath "gradle.plugin.world.betterme.localizer:localizer-android:$localizerVer"
     }
 }
 ```
@@ -24,7 +24,7 @@ buildscript {
 ### 2. Apply plugin in your module-level `build.gradle`.
 
 ```groovy
-apply plugin: 'com.betterme.localizer'
+apply plugin: 'world.betterme.localizer'
 ```
 
 ### 3. Set up POEditor configs and translations upload/download parameters.
