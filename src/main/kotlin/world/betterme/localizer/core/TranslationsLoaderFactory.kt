@@ -1,12 +1,12 @@
 package world.betterme.localizer.core
 
+import com.google.gson.Gson
+import okhttp3.OkHttpClient
 import world.betterme.localizer.data.TranslationsLocalStore
 import world.betterme.localizer.data.TranslationsLocalStoreImpl
 import world.betterme.localizer.data.TranslationsRestStore
 import world.betterme.localizer.data.TranslationsRestStoreImpl
 import world.betterme.localizer.data.models.ApiParams
-import com.google.gson.Gson
-import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 
 class TranslationsLoaderFactory {
@@ -18,10 +18,16 @@ class TranslationsLoaderFactory {
          */
         @JvmStatic
         fun create(apiParams: ApiParams): TranslationsLoader {
+            val parser = XmlParser()
+            val notifier = SlackNotifier(apiParams.slackWebHook)
             return TranslationsLoaderImpl(
                 apiParams = apiParams,
                 restStore = translationsRestStore(),
-                localStore = translationsLocalStore()
+                localStore = translationsLocalStore(),
+                translationsValidator = TranslationsValidator(
+                    parser,
+                    notifier
+                )
             )
         }
 

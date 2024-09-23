@@ -28,6 +28,8 @@ open class LocalizerPlugin : Plugin<Project> {
             it.filters?.addAll(extension.filters)
             it.tags?.addAll(extension.tags)
             it.supportRegions?.set(supportRegions)
+            it.slackWebHook.set(extension.slackWebHook)
+            it.validateTranslations.set(extension.validateTranslations)
         }
     }
 }

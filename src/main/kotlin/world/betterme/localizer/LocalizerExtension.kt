@@ -14,4 +14,6 @@ open class LocalizerExtension(project: Project) {
     val filters: ListProperty<String> = project.objects.listProperty(String::class.java)
     val tags: ListProperty<String> = project.objects.listProperty(String::class.java)
     val supportRegions: Property<String> = project.objects.property(String::class.java)
+    val slackWebHook: Property<String> = project.objects.property(String::class.java)
+    val validateTranslations: Property<String> = project.objects.property(String::class.java)
 }

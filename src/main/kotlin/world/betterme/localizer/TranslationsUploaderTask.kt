@@ -1,12 +1,12 @@
 package world.betterme.localizer
 
 import org.gradle.api.DefaultTask
+import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
-import org.gradle.api.provider.Property
-import world.betterme.localizer.data.models.ApiParams
 import world.betterme.localizer.core.TranslationsLoaderFactory
+import world.betterme.localizer.data.models.ApiParams
 
 open class TranslationsUploaderTask : DefaultTask() {
 
@@ -34,7 +34,11 @@ open class TranslationsUploaderTask : DefaultTask() {
     @Suppress("unused")
     @TaskAction
     fun uploadTranslations() {
-        val apiParams = ApiParams(apiToken = apiToken.get(), projectId = projectId.get())
+        val apiParams = ApiParams(
+            apiToken = apiToken.get(),
+            projectId = projectId.get(),
+            slackWebHook = "" // no-op
+        )
         val translationsLoader = TranslationsLoaderFactory.create(apiParams)
         translationsLoader.uploadTermsAndTranslations(
             resFolderPath = resourcesPath.get(),

@@ -18,7 +18,8 @@ interface TranslationsLoader {
         resFolderPath: String,
         filters: List<String>,
         tags: List<String>,
-        supportRegions: Boolean
+        supportRegions: Boolean,
+        validateTranslations: Boolean,
     )
 
     /**
@@ -40,14 +41,16 @@ interface TranslationsLoader {
 internal class TranslationsLoaderImpl(
     private val apiParams: ApiParams,
     private val restStore: TranslationsRestStore,
-    private val localStore: TranslationsLocalStore
+    private val localStore: TranslationsLocalStore,
+    private val translationsValidator: TranslationsValidator,
 ) : TranslationsLoader {
 
     override fun downloadLocalizedStrings(
         resFolderPath: String,
         filters: List<String>,
         tags: List<String>,
-        supportRegions: Boolean
+        supportRegions: Boolean,
+        validateTranslations: Boolean,
     ) {
         val availableLocales = restStore.getAvailableLanguages(apiParams)
         println("Retrieved list of locales available for this project: $availableLocales")
@@ -55,8 +58,15 @@ internal class TranslationsLoaderImpl(
         urls.forEach { (locale, url) ->
             println("Starting translations for exportLocale $locale download with filters [$filters] and tags [$tags]")
             val fileContent = restStore.loadTranslationsContent(url)
+            if (validateTranslations) {
+                translationsValidator.appendTranslationContent(locale, fileContent)
+            }
             println("Saving translations for exportLocale $locale")
             localStore.saveToFile(resFolderPath, fileContent, locale, supportRegions)
+        }
+
+        if (validateTranslations) {
+            translationsValidator.validateAll()
         }
     }
 
