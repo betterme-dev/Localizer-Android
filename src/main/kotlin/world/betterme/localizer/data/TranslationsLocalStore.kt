@@ -11,7 +11,7 @@ internal interface TranslationsLocalStore {
         resFolderPath: String,
         fileContents: String,
         locale: String,
-        supportRegions: Boolean
+        supportRegions: Boolean,
     )
 
     fun getStringsFilePath(resFolderPath: String, locale: String, supportRegions: Boolean): String
@@ -23,7 +23,7 @@ internal class TranslationsLocalStoreImpl : TranslationsLocalStore {
         resFolderPath: String,
         fileContents: String,
         locale: String,
-        supportRegions: Boolean
+        supportRegions: Boolean,
     ) {
         if (fileContents.isEmpty() or fileContents.isBlank()) return
         val fileName = getStringsFilePath(resFolderPath, locale, supportRegions)
@@ -34,7 +34,7 @@ internal class TranslationsLocalStoreImpl : TranslationsLocalStore {
         if (!translationFile.exists()) {
             translationFile.createNewFile()
         }
-        translationFile.bufferedWriter().use { out ->
+        translationFile.bufferedWriter(charset = Charsets.UTF_8).use { out ->
             out.write(fileContents)
         }
         // Almost identical https://en.wikipedia.org/wiki/Comparison_of_Afrikaans_and_Dutch
@@ -50,7 +50,7 @@ internal class TranslationsLocalStoreImpl : TranslationsLocalStore {
     override fun getStringsFilePath(
         resFolderPath: String,
         locale: String,
-        supportRegions: Boolean
+        supportRegions: Boolean,
     ): String {
         val isRegionalLocale = locale.contains(Regex("[a-z\\-A-Z]"))
 
