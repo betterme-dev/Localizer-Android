@@ -118,7 +118,7 @@ internal class TranslationsLoaderImpl(
             }
                 .fold(
                     onSuccess = {
-                        println("Download success!")
+                        println("Download success: $locale")
                     },
                     onFailure = { error ->
                         // We need to die gracefully on translations parsing or download failures.
