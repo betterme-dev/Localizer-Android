@@ -1,5 +1,12 @@
 package world.betterme.localizer.core
 
+import org.w3c.dom.Document
+import org.w3c.dom.Element
+import org.w3c.dom.Node
+import world.betterme.localizer.data.TranslationsLocalStore
+import world.betterme.localizer.data.TranslationsRestStore
+import world.betterme.localizer.data.constants.MetaDataContants.Values.Locales.VALUE_ENG
+import world.betterme.localizer.data.models.ApiParams
 import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.StringWriter
@@ -8,13 +15,6 @@ import javax.xml.transform.OutputKeys
 import javax.xml.transform.TransformerFactory
 import javax.xml.transform.dom.DOMSource
 import javax.xml.transform.stream.StreamResult
-import org.w3c.dom.Document
-import org.w3c.dom.Element
-import org.w3c.dom.Node
-import world.betterme.localizer.data.TranslationsLocalStore
-import world.betterme.localizer.data.TranslationsRestStore
-import world.betterme.localizer.data.constants.MetaDataContants.Values.Locales.VALUE_ENG
-import world.betterme.localizer.data.models.ApiParams
 
 interface TranslationsLoader {
 
@@ -74,46 +74,65 @@ internal class TranslationsLoaderImpl(
         urls.forEach { (locale, url) ->
             val fileContent = restStore.loadTranslationsContent(url)
 
-            when {
-                // Save all the translations
-                fullMode -> {
-                    val (restDoc, allKeys) = parseTranslations(fileContent)
-                    val resultContent = writeTranslations(restDoc, allKeys)
-                    localStore.saveToFile(resFolderPath, resultContent, locale, supportRegions)
-                }
-
-                // Update only the translations with specified keys
-                keys.isNotEmpty() -> {
-                    val (restDoc, _) = parseTranslations(fileContent)
-                    val localStringsFilePath = localStore.getStringsFilePath(resFolderPath, locale, supportRegions)
-                    val localTranslationsKeys = if (File(localStringsFilePath).exists()) {
-                        val localFileContent = File(localStringsFilePath).readText()
-                        val (_, localKeys) = parseTranslations(localFileContent)
-                        localKeys
-                    } else {
-                        emptySet()
+            runCatching {
+                when {
+                    // Save all the translations
+                    fullMode -> {
+                        val (restDoc, allKeys) = parseTranslations(fileContent)
+                        val resultContent = writeTranslations(restDoc, allKeys)
+                        localStore.saveToFile(resFolderPath, resultContent, locale, supportRegions)
                     }
-                    val keysToKeep = localTranslationsKeys + keys
-                    val filteredContent = writeTranslations(restDoc, keysToKeep)
-                    localStore.saveToFile(resFolderPath, filteredContent, locale, supportRegions)
-                }
 
-                // Update only the keys that are present in the main strings file
-                else -> {
-                    val (restDoc, _) = parseTranslations(fileContent)
-                    val mainLocale = VALUE_ENG
-                    val mainStringsFilePath = localStore.getStringsFilePath(resFolderPath, mainLocale, supportRegions)
-                    val mainTranslationsKeys = if (File(mainStringsFilePath).exists()) {
-                        val localFileContent = File(mainStringsFilePath).readText()
-                        val (_, mainKeys) = parseTranslations(localFileContent)
-                        mainKeys
-                    } else {
-                        emptySet()
+                    // Update only the translations with specified keys
+                    keys.isNotEmpty() -> {
+                        val (restDoc, _) = parseTranslations(fileContent)
+                        val localStringsFilePath = localStore.getStringsFilePath(resFolderPath, locale, supportRegions)
+                        val localTranslationsKeys = if (File(localStringsFilePath).exists()) {
+                            val localFileContent = File(localStringsFilePath).readText()
+                            val (_, localKeys) = parseTranslations(localFileContent)
+                            localKeys
+                        } else {
+                            emptySet()
+                        }
+                        val keysToKeep = localTranslationsKeys + keys
+                        val filteredContent = writeTranslations(restDoc, keysToKeep)
+                        localStore.saveToFile(resFolderPath, filteredContent, locale, supportRegions)
                     }
-                    val filteredContent = writeTranslations(restDoc, mainTranslationsKeys)
-                    localStore.saveToFile(resFolderPath, filteredContent, locale, supportRegions)
+
+                    // Update only the keys that are present in the main strings file
+                    else -> {
+                        val (restDoc, _) = parseTranslations(fileContent)
+                        val mainLocale = VALUE_ENG
+                        val mainStringsFilePath = localStore.getStringsFilePath(resFolderPath, mainLocale, supportRegions)
+                        val mainTranslationsKeys = if (File(mainStringsFilePath).exists()) {
+                            val localFileContent = File(mainStringsFilePath).readText()
+                            val (_, mainKeys) = parseTranslations(localFileContent)
+                            mainKeys
+                        } else {
+                            emptySet()
+                        }
+                        val filteredContent = writeTranslations(restDoc, mainTranslationsKeys)
+                        localStore.saveToFile(resFolderPath, filteredContent, locale, supportRegions)
+                    }
                 }
             }
+                .fold(
+                    onSuccess = {
+                        println("Download success!")
+                    },
+                    onFailure = { error ->
+                        // We need to die gracefully on translations parsing or download failures.
+                        val errorMessage = "Download error: Did not manage to parse strings for locale: $locale "
+                            .plus("\nvia URL: $url")
+                            .plus("\nError: ${error.message}")
+                            .plus("\n")
+                            .plus(
+                                "Make sure there are no files with empty strings list and the strings files " +
+                                "themselves are downloaded in a correct format."
+                            )
+                        println(errorMessage)
+                    }
+                )
         }
     }
 
