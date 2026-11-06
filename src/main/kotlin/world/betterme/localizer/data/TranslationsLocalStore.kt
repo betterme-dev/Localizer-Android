@@ -4,6 +4,7 @@ import java.io.File
 import world.betterme.localizer.data.constants.MetaDataContants.Values.Locales
 import world.betterme.localizer.data.constants.MetaDataContants.Values.Locales.isDutch
 import world.betterme.localizer.data.constants.MetaDataContants.Values.Locales.isHebrew
+import world.betterme.localizer.data.constants.MetaDataContants.Values.Locales.isNorwegianBokmal
 
 internal interface TranslationsLocalStore {
 
@@ -44,6 +45,10 @@ internal class TranslationsLocalStoreImpl : TranslationsLocalStore {
         // To handle this particular scenario https://stackoverflow.com/a/8202428
         if (locale.isHebrew()) {
             saveToFile(resFolderPath, fileContents, Locales.VALUE_IW, supportRegions)
+        }
+        if (locale.isNorwegianBokmal()) {
+            saveToFile(resFolderPath, fileContents, Locales.VALUE_NO, supportRegions)
+            saveToFile(resFolderPath, fileContents, Locales.VALUE_NN, supportRegions)
         }
     }
 
