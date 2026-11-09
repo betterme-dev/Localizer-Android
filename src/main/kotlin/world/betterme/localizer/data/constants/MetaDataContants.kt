@@ -33,8 +33,11 @@ internal object MetaDataContants {
             const val VALUE_ENG = "en"
             const val VALUE_AF = "af"
             const val VALUE_IW = "iw"
+            const val VALUE_NO = "no"
+            const val VALUE_NN = "nn"
             private const val VALUE_NL = "nl"
             private const val VALUE_HE = "he"
+            private const val VALUE_NB = "nb"
 
             fun String.isDutch(): Boolean {
                 return this == VALUE_NL
@@ -42,6 +45,10 @@ internal object MetaDataContants {
 
             fun String.isHebrew(): Boolean {
                 return this == VALUE_HE
+            }
+
+            fun String.isNorwegianBokmal(): Boolean {
+                return this == VALUE_NB
             }
         }
     }
