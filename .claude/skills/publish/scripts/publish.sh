@@ -2,8 +2,8 @@
 # Deterministic release gate for the Localizer Gradle plugin (world.betterme.localizer).
 #
 # Usage (from anywhere inside the Localizer-Android checkout):
-#   bash .claude/skills/publishing-localizer-plugin/scripts/publish.sh --expect-version X.Y.Z            # dry run
-#   bash .claude/skills/publishing-localizer-plugin/scripts/publish.sh --expect-version X.Y.Z --publish  # real publish
+#   bash .claude/skills/publish/scripts/publish.sh --expect-version X.Y.Z            # dry run
+#   bash .claude/skills/publish/scripts/publish.sh --expect-version X.Y.Z --publish  # real publish
 #
 # Every check runs in a fixed order and stops at the first failure with its own exit code.
 # The script never prints credential values.

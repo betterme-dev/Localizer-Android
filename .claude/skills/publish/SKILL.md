@@ -1,5 +1,6 @@
 ---
-name: publishing-localizer-plugin
+name: publish
+argument-hint: "<X.Y.Z | PR number>"
 description: Use when asked to publish, release, deploy or upload a new version of the Localizer Gradle plugin (world.betterme.localizer, localizer-android) to the Gradle Plugin Portal, including "publish the version from PR #N", "release 1.x.y", or "push localizer to plugins.gradle.org".
 ---
 
@@ -11,7 +12,7 @@ All checks live in `scripts/publish.sh`. It runs them in a fixed order and stops
 
 ## Procedure
 
-1. **Get the target version.** Use the exact `X.Y.Z` the user named. If they named a PR, read it with `gh pr view <N> -R betterme-dev/Localizer-Android --json state,body,mergeCommit` and take the version from the description. The PR must be `MERGED` into `master`. If no version can be found, ask the user. Don't guess.
+1. **Get the target version.** Use the exact `X.Y.Z` the user named or passed as `/publish X.Y.Z`. A bare number such as `/publish 12` is a PR number. If they named a PR, read it with `gh pr view <N> -R betterme-dev/Localizer-Android --json state,body,mergeCommit` and take the version from the description. The PR must be `MERGED` into `master`. If no version can be found, ask the user. Don't guess.
 2. **Get a clean checkout at `origin/master`:**
    ```bash
    git clone git@github.com:betterme-dev/Localizer-Android.git   # or reuse a clean clone
@@ -19,7 +20,7 @@ All checks live in `scripts/publish.sh`. It runs them in a fixed order and stops
    ```
 3. **Dry run:**
    ```bash
-   bash .claude/skills/publishing-localizer-plugin/scripts/publish.sh --expect-version X.Y.Z
+   bash .claude/skills/publish/scripts/publish.sh --expect-version X.Y.Z
    ```
 4. **On a non-zero exit, follow the table below and stop.**
 5. **On `DRY RUN PASSED`,** show the user the version, the commit and the test count. Ask them to confirm publishing, because published versions can't be deleted or overwritten. Wait for a yes that names this version, or one given in reply to that question.
